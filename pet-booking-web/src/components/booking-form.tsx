@@ -66,10 +66,9 @@ export default function BookingForm() {
         if (!formData.time_of_day) newErrors.time_of_day = "Please select a time of day";
         const today = new Date();
         const selectedDayIndex = days.indexOf(formData.selected_day);
-        const todayIndex = today.getDay(); // Get today's day index (0=Sun, 6=Sat)
+        const todayIndex = today.getDay();
 
         if (selectedDayIndex !== -1) {
-            // If selected day is earlier in the week than today, it's invalid
             if (selectedDayIndex < todayIndex) {
                 newErrors.selected_day = "You cannot select a past day.";
             }
