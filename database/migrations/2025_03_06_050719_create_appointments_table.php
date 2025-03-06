@@ -17,9 +17,10 @@ return new class extends Migration
             $table->foreignId('pet_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('pet_name')->nullable();
-            $table->date('selected_date');
+            $table->string('selected_day');
+            $table->string('frequency');
+            $table->string('start_date');
             $table->enum('time_of_day', ['morning', 'afternoon', 'evening']);
-            $table->time('select_time');
             $table->string('status')->default('pending');
             $table->text('notes')->nullable();
             $table->timestamps();

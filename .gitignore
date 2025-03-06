@@ -21,3 +21,12 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+
+# Frontend ignores
+/pet-booking-web/node_modules/
+/pet-booking-web/.env
+/pet-booking-web/build/
+/pet-booking-web/dist/
+/pet-booking-web/.cache
+/pet-booking-web/*.log

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Http\Resources\AppointmentResource;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 
 class AppointmentController extends Controller
@@ -28,12 +29,14 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
+        // Log::info('Incoming Request',$request->all());
         $validator = Validator::make($request->all(),[
             'name' => 'required|string',
             'pet_name' => 'required|string',
-            'selected_date' => 'required|date',
-            'time_of_day' => 'required|in:morning,afternoon,evening',
-            'select_time' => 'required|date_format:H:i',
+            'selected_day' => 'required|string|in:Sun,Mon,Tue,Wed,Thu,Fri,Sat',
+            'time_of_day' => 'required|in:Morning,Afternoon,Evening',
+            'frequency' => 'required|string',
+            'start_date' => 'required|string',
             'notes' => 'nullable|string',
         ]);
 
@@ -47,9 +50,10 @@ class AppointmentController extends Controller
         $appointment = Appointment::create([
             'name' => $request->name,
             'pet_name' => $request->pet_name,
-            'selected_date' => $request->selected_date,
+            'selected_day' => $request->selected_day,
             'time_of_day' => $request->time_of_day,
-            'select_time' => $request->select_time,
+            'frequency' => $request->frequency,
+            'start_date' => $request->start_date,
             'notes' => $request->notes,
         ]);
 
@@ -72,12 +76,13 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, Appointment $appointment)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'name' => 'required|string',
             'pet_name' => 'required|string',
-            'selected_date' => 'required|date',
-            'time_of_day' => 'required|in:morning,afternoon,evening',
-            'select_time' => 'required|date_format:H:i',
+            'selected_day' => 'required|string|in:Sun,Mon,Tue,Wed,Thu,Fri,Sat',
+            'time_of_day' => 'required|in:Morning,Afternoon,Evening',
+            'frequency' => 'required|string',
+            'start_date' => 'required|string',
             'notes' => 'nullable|string',
         ]);
 
@@ -90,15 +95,16 @@ class AppointmentController extends Controller
         $appointment->update([
             'name' => $request->name,
             'pet_name' => $request->pet_name,
-            'selected_date' => $request->selected_date,
+            'selected_day' => $request->selected_day,
             'time_of_day' => $request->time_of_day,
-            'select_time' => $request->select_time,
+            'frequency' => $request->frequency,
+            'start_date' => $request->start_date,
             'notes' => $request->notes
         ]);
 
         return response()->json([
             'message'=>'Appointment updated successfully',
-            'data'=> new AppointmentResource($appointment) 
+            'data'=> new AppointmentResource($appointment)
     ],200);
     }
 
